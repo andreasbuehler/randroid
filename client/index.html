@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Randroid</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>    
+    <script>
+        $(() => {
+            const socket = io();
+            const msgsContainer = $('#messages');
+
+            socket.on('msg', msg => {
+                msgsContainer.append(`<div>${msg}</div>`);                
+            })
+        
+            window.sendMsg = function() {
+                console.log('sending message');
+                const html = document.getElementById('msg').value;
+                socket.emit('msg', html);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="messages"></div>
+    <textarea id="msg" cols="20" rows="1"></textarea>
+    <button onclick="sendMsg()">send message</button>
+</body>
+
+</html>
